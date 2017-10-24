@@ -9,18 +9,13 @@ require_once(LIBWWWDIR . '/auth.php');
 
 // Where the user was trying to go, we'll redirect them back
 session_start();
-$next = $_SESSION['redirect_after_login'];
 
 
 if (isset($_REQUEST['code'])) {
 	try {
 		do_login_oidc();
 	} catch (OpenIDConnectClientException $exception) {
-		// Retry the login request if it was something like
-		if ($_REQUEST['code']) {
-			header("Location: $next");
-			exit;
-		} else {
+		if (!$_REQUEST['code']) {
 			throw $exception;
 		}
 	}
@@ -29,7 +24,5 @@ if (isset($_REQUEST['code'])) {
 	exit;
 }
 
-
-// Redirect to wherever the user was trying to go initially
-header("Location: $next");
+header("Location: /");
 exit;

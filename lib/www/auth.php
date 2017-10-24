@@ -1,4 +1,4 @@
-<?php
+d?php
 /**
  * This file provides all functionality for authenticating teams. The
  * authentication method used is configured with the AUTH_METHOD
@@ -392,33 +392,36 @@ function do_login_oidc() {
 	}
 
 	$oidc = new OpenIDConnectClient($provider, $clientID, $clientSecret);
-	$oidc->addScope(array("openid", "email"));
+	$oidc->addScope(array("openid", "email", "profile"));
 
 	// TODO: how to dynamically figure this out properly on all/most servers
 	$oidc->setRedirectURL(BASEURL . "/auth/oid_cb.php");
 
 	// For google, forces asking the user what account they want to use every time.
-	$oidc->addAuthParam(array("prompt"=>"select_account"));
+	$oidc->addAuthParam(array("prompt"=>"select_account", "hd" => "k12.friscoisd.org"));
 
 	if (isset($_REQUEST["code"])) {
 		// authenticate the code we've received
 		$oidc->authenticate();
 	} else {
-		// save destination url in session so we can redirect after log in
-		$_SESSION['redirect_after_login'] = $_SERVER['PHP_SELF'];
-
 		// Launch the OpenID Connect process
 		$oidc->authenticate();
 	}
 
 	// we are logged in now, get a bunch of user information from the OID Provider
-	$username = "oidc-" . $oidc->requestUserInfo("sub");
+	$username = $oidc->requestUserInfo("email");
 	$email = $oidc->requestUserInfo("email");
+	$name = $oidc->requestUserInfo("name");
 
 
 	// Create the user if they don't exist
 	$user = $DB->q('MAYBETUPLE SELECT * FROM user WHERE username = %s', $username);
 	if (!$user) {
+
+		if (substr($email, -strlen("friscoisd.org"))!=="friscoisd.org") {
+                        show_failed_login("Only Frisco ISD students and faculty are allowed to register with Google Authentication!");
+                }
+
 		$user = array();
 
 		// Create a team for the user as well
