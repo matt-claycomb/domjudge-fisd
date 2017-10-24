@@ -634,6 +634,20 @@ if ( !empty($jud['result']) ) {
 		}
 	}
 
+	// Display options for overriding validator.
+	if ( ! $jud['verified'] ) {
+	  echo addForm('override.php') .
+	  		addHidden('id', $jud['judgingid']);
+	  if ( $jud['result'] == "correct" ) {
+	    echo addHidden('val', 0) .
+	    		addSubmit('mark incorrect', 'override');
+	  } else {
+	  	echo addHidden('val', 1) .
+	  			addSubmit('mark correct', 'override');
+	  }
+		echo addEndForm();
+	}
+
 	if ( $verify_change_allowed ) {
 		echo '; ' . addSubmit(($val ? '' : 'un') . 'mark verified', 'verify');
 		if ( $val ) echo ' with comment ' . addInput('comment', '', 25);
