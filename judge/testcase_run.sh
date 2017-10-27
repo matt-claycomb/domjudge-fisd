@@ -205,8 +205,8 @@ INDATA="testdata.in"
 if [ "$FILENAME" != "NULL" ]
 then
   DIR=`dirname "$PREFIX/$PROGRAM"`
-  cp testdata.in "$DIR/$FILENAME"
-  cp testdata.in "$FILENAME"
+  ln -s testdata.in "$DIR/$FILENAME"
+  ln -s testdata.in "$FILENAME"
   INDATA="/dev/null"
 fi
 
