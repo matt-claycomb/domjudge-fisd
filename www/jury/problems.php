@@ -16,6 +16,7 @@ echo "<h1>Problems</h1>\n\n";
 // Select all data
 $res = $DB->q('SELECT p.probid,p.name,p.timelimit,p.memlimit,p.outputlimit,
                p.problemtext_type, COUNT(testcaseid) AS testcases
+               CASE WHEN (filename = "" OR filename is NULL) THEN "stdin" ELSE filename END as filename
                FROM problem p
                LEFT JOIN testcase USING (probid)
                GROUP BY probid ORDER BY probid');
