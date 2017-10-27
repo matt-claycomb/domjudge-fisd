@@ -70,6 +70,7 @@ INSERT INTO `executable` (`execid`, `description`, `type`) VALUES
 ('java_javac', 'java_javac', 'compile'),
 ('java_javac_detect', 'java_javac_detect', 'compile'),
 ('js', 'js', 'compile'),
+('kt', 'kt', 'compile'),
 ('lua', 'lua', 'compile'),
 ('pas', 'pas', 'compile'),
 ('pl', 'pl', 'compile'),
