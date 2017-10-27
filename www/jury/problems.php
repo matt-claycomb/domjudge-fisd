@@ -40,6 +40,7 @@ if( $res->count() == 0 ) {
 	     "<th scope=\"col\">memory<br />limit</th>" .
 	     "<th scope=\"col\">output<br />limit</th>" .
 	     "<th scope=\"col\">test<br />cases</th>" .
+             "<th scope=\"col\">input<br />file</th>" .
 	     "<th scope=\"col\"></th>" .
 	    ( IS_ADMIN ? "<th scope=\"col\"></th><th scope=\"col\"></th>" : '' ) .
 	     "</tr></thead>\n<tbody>\n";
@@ -61,7 +62,8 @@ if( $res->count() == 0 ) {
 			"</td><td>" . $link . (isset($row['memlimit']) ? (int)$row['memlimit'] : 'default') . "</a>" .
 			"</td><td>" . $link . (isset($row['outputlimit']) ? (int)$row['outputlimit'] : 'default') . "</a>" .
 			"</td><td><a href=\"testcase.php?probid=" . $row['probid'] .
-			"\">" . $row['testcases'] . "</a></td>";
+			"\">" . $row['testcases'] . "</a>" .
+			"</td><td>" . $link . $row['filename'] . "</a></td>";
 		if ( !empty($row['problemtext_type']) ) {
 			echo '<td title="view problem description">' .
 			     '<a href="problem.php?id=' . urlencode($row['probid']) .
