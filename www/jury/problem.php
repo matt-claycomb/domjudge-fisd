@@ -83,7 +83,7 @@ if ( !empty($cmd) ):
 		$row = $DB->q('TUPLE SELECT p.probid,p.name,
 		                            p.timelimit,p.memlimit,p.outputlimit,
 		                            p.special_run,p.special_compare, p.special_compare_args,
-		                            p.problemtext_type, COUNT(testcaseid) AS testcases
+		                            p.problemtext_type, COUNT(testcaseid) AS testcases, p.filename
 		               FROM problem p
 		               LEFT JOIN testcase USING (probid)
 		               WHERE probid = %i GROUP BY probid', $id);
@@ -148,7 +148,7 @@ echo addSelect('data[0][special_compare]', $execmap, @$row['special_compare'], T
 <td><?php echo addInput('data[0][special_compare_args]', @$row['special_compare_args'], 30, 255)?></td></tr>
 
 <tr><td><label for="data_0__filename__">Data filename:</label></td>
-<td><?php echo addInput('data[0][filename]', @$row['filename'], 30, 255, 'placeholder="empty for system.in/stdin"')?></td></tr>
+<td><?php echo addInput('data[0][filename]', @$row['filename'], 30, 255, 'placeholder="empty for stdin"')?></td></tr>
 
 </table>
 
@@ -188,6 +188,7 @@ $data = $DB->q('TUPLE SELECT p.probid,p.name,
                              p.timelimit,p.memlimit,p.outputlimit,
                              p.special_run,p.special_compare,p.special_compare_args,
                              p.problemtext_type, count(rank) AS ntestcases
+                             CASE WHEN (filename = "" OR filename is NULL) THEN "stdin" ELSE filename END as filename
                 FROM problem p
                 LEFT JOIN testcase USING (probid)
                 WHERE probid = %i GROUP BY probid', $id);
@@ -209,6 +210,9 @@ if ( !isset($data['special_run']) ) {
 if ( !isset($data['special_compare']) ) {
 	$defaultcompare = TRUE;
 	$data['special_compare'] = dbconfig_get('default_compare');
+}
+if ( (!isset($data['filename'])) || ($data['filename'] == '') ) {
+	$data['filename'] = 'stdin';
 }
 
 echo "<h1>Problem ".specialchars($data['name'])."</h1>\n\n";
@@ -260,6 +264,8 @@ if ( !empty($data['special_compare_args']) ) {
 	echo '<tr><td>Compare script arguments:</td><td>' .
 		specialchars($data['special_compare_args']) . "</td></tr>\n";
 }
+	
+<tr><td>Input Filename:</td><td><?php echo $data['filename']; ?></td></tr>
 
 echo "</table>\n" . addEndForm();
 
