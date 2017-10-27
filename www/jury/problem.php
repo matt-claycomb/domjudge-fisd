@@ -148,7 +148,7 @@ echo addSelect('data[0][special_compare]', $execmap, @$row['special_compare'], T
 <td><?php echo addInput('data[0][special_compare_args]', @$row['special_compare_args'], 30, 255)?></td></tr>
 
 <tr><td><label for="data_0__filename__">Data filename:</label></td>
-<td><?php echo addInput('data[0][filename]', @$row['filename'], 30, 255)?></td></tr>
+<td><?php echo addInput('data[0][filename]', @$row['filename'], 30, 255, 'placeholder="empty for system.in/stdin"')?></td></tr>
 
 </table>
 
