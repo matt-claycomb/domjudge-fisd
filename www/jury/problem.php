@@ -187,8 +187,8 @@ endif;
 $data = $DB->q('TUPLE SELECT p.probid,p.name,
                              p.timelimit,p.memlimit,p.outputlimit,
                              p.special_run,p.special_compare,p.special_compare_args,
-                             p.problemtext_type, count(rank) AS ntestcases
-                             CASE WHEN (filename = "" OR filename is NULL) THEN "stdin" ELSE filename END as filename
+                             p.problemtext_type, count(rank) AS ntestcases,
+			     p.filename
                 FROM problem p
                 LEFT JOIN testcase USING (probid)
                 WHERE probid = %i GROUP BY probid', $id);
