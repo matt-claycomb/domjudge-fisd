@@ -1,4 +1,4 @@
-d?php
+<?php
 /**
  * This file provides all functionality for authenticating teams. The
  * authentication method used is configured with the AUTH_METHOD
