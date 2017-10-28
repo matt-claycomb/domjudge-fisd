@@ -634,6 +634,14 @@ if ( !empty($jud['result']) ) {
 		}
 	}
 
+	if ( $verify_change_allowed ) {
+		echo '; ' . addSubmit(($val ? '' : 'un') . 'mark verified', 'verify');
+		if ( $val ) echo ' with comment ' . addInput('comment', '', 25);
+		echo "</p>" . addEndForm();
+	} else {
+		echo "</p>\n";
+	}
+
 	// Display options for overriding validator.
 	if ( ! $jud['verified'] ) {
 	  echo addForm('override.php') .
@@ -646,14 +654,6 @@ if ( !empty($jud['result']) ) {
 	  			addSubmit('mark correct', 'override');
 	  }
 		echo addEndForm();
-	}
-
-	if ( $verify_change_allowed ) {
-		echo '; ' . addSubmit(($val ? '' : 'un') . 'mark verified', 'verify');
-		if ( $val ) echo ' with comment ' . addInput('comment', '', 25);
-		echo "</p>" . addEndForm();
-	} else {
-		echo "</p>\n";
 	}
 } else { // judging does not have a result yet
 		echo "<p><b>Judging is not ready yet!</b></p>\n";
