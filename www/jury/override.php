@@ -19,7 +19,7 @@ $cnt = $DB->q('RETURNAFFECTED UPDATE judging' .
               ' SET verified = 1, verify_comment = "", result = %s, jury_member = ' . ($val ? '%s ' : 'NULL %_ ') .
               ' WHERE judgingid = %i',
               ($val == "1")?"correct":"wrong-answer", $jury_member, $id);
-auditlog("override", 'j'.$id, "overrode", $val ? "correct" : "incorrect");
+auditlog("override", 'j'.$id, "overrode", $val ? "correct" : "wrong-answer");
 
 if ( $cnt == 0 ) {
 	error("Judging '$id' not found or nothing changed.");
