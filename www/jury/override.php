@@ -51,10 +51,6 @@ if ( dbconfig_get('verification_required', 0) ) {
 	}
 }
 
-/* redirect to referrer page after verification
- * or back to submission page when unverifying. */
-if ( $val ) {
-	$redirect = @$_POST['redirect'];
-	if ( empty($redirect) ) $redirect = 'submissions.php';
-	header('Location: '.$redirect);
-}
+$redirect = @$_POST['redirect'];
+if ( empty($redirect) ) $redirect = 'submissions.php';
+header('Location: '.$redirect);
