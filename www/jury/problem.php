@@ -265,7 +265,7 @@ if ( !empty($data['special_compare_args']) ) {
 		specialchars($data['special_compare_args']) . "</td></tr>\n";
 }
 	
-<tr><td>Input Filename:</td><td><?php echo $data['filename']; ?></td></tr>
+?><tr><td>Input Filename:</td><td><?php echo $data['filename']; ?></td></tr><?php
 
 echo "</table>\n" . addEndForm();
 
