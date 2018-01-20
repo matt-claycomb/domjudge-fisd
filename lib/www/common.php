@@ -572,7 +572,7 @@ function putSampleTestcase($probid, $seq, $type)
 {
 	global $DB, $cdata;
 
-	$sample = $DB->q('MAYBETUPLE SELECT shortname, ' . $type . 'put AS content
+	$sample = $DB->q('MAYBETUPLE SELECT shortname, ' . $type . 'put AS content, filename
 	                  FROM problem INNER JOIN testcase USING (probid)
 	                  INNER JOIN contestproblem USING (probid)
 	                  WHERE probid = %i AND cid = %i AND allow_submit = 1
@@ -584,7 +584,7 @@ function putSampleTestcase($probid, $seq, $type)
 	}
 	$probname = $sample['shortname'];
 
-	$filename = "sample-$probname.$seq.$type";
+	$filename = $sample['filename']??"sample-$probname.$seq.$type";
 
 	header("Content-Type: text/plain; name=\"$filename\"");
 	header("Content-Disposition: attachment; filename=\"$filename\"");
