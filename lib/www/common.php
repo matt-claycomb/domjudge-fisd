@@ -611,7 +611,7 @@ function putProblemTextList()
 	} else {
 
 		// otherwise, display list
-		$res = $DB->q('SELECT probid,shortname,name,color,problemtext_type,SUM(sample) AS numsamples
+		$res = $DB->q('SELECT probid,shortname,name,color,problemtext_type,SUM(sample) AS numsamples,filename
 		               FROM problem
 		               INNER JOIN testcase USING(probid)
 		               INNER JOIN contestproblem USING (probid)
@@ -632,8 +632,10 @@ function putProblemTextList()
 				if ( !empty($row['numsamples']) ) {
 					for($i=1; $i<=$row['numsamples']; ++$i) {
 						print '<img src="../images/b_save.png" alt="download" /> ';
-						print '<a href="problem.php?id=' . urlencode($row['probid']) .
-						      '&amp;testcase=' . urlencode($i) . '&amp;type=in">sample input</a> | ';
+						if ( $row['filename'] != "none" ) {
+							print '<a href="problem.php?id=' . urlencode($row['probid']) .
+							      '&amp;testcase=' . urlencode($i) . '&amp;type=in">sample input</a> | ';
+						}
 						print '<a href="problem.php?id=' . urlencode($row['probid']) .
 						      '&amp;testcase=' . urlencode($i) . '&amp;type=out">sample output</a>';
 						print "<br />";
