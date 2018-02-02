@@ -202,7 +202,7 @@ logmsg $LOG_INFO "running program (USE_CHROOT = ${USE_CHROOT:-0})"
 
 INDATA="testdata.in"
 
-if [ "$FILENAME" != "NULL" ]
+if [ "$FILENAME" != "NULL" -a "$FILENAME" != "none" ]
 then
   DIR=`dirname "$PREFIX/$PROGRAM"`
   cp testdata.in "$DIR/$FILENAME"
