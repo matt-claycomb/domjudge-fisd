@@ -586,6 +586,14 @@ function putSampleTestcase($probid, $seq, $type)
 
 	$filename = $sample['filename']??"sample-$probname.$seq.$type";
 
+        if ($type == "out") {
+                $filename = "$probname.out";
+        }
+
+        if ( $filename == "none" ) {
+                error("Problem p$probid does not provide input data");
+        }
+
 	header("Content-Type: text/plain; name=\"$filename\"");
 	header("Content-Disposition: attachment; filename=\"$filename\"");
 	header("Content-Length: " . strlen($sample['content']));
