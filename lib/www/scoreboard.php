@@ -413,7 +413,7 @@ function renderScoreBoardTable($sdata, $myteamid = null, $static = FALSE,
 			'<td class="scoretn"' .
 			(!empty($color) ? ' style="background: ' . $color . ';"' : '') .
 			(IS_JURY ? ' title="' . specialchars($team) . '"' : '') . '>' .
-			($static ? '' : '<a href="team.php?id=' . urlencode($team) . '">') .
+			(($static || !logged_in()) ? '' : '<a href="team.php?id=' . urlencode($team) . '">') .
 			specialchars(logged_in()?$teams[$team]['name']:"*omitted*") .
 			($SHOW_AFFILIATIONS ? '<br /><span class="univ">' . $affilname .
 			 '</span>' : '') .
