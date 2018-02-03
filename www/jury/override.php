@@ -16,7 +16,7 @@ $jury_member = $username;
 // Explicitly unset jury_member when unmarking verified: otherwise this
 // judging would be marked as "claimed".
 $cnt = $DB->q('RETURNAFFECTED UPDATE judging' .
-              ' SET verified = 1, verify_comment = "", result = %s, jury_member = ' . ($val ? '%s ' : 'NULL %_ ') .
+              ' SET verified = 1, verify_comment = "", result = %s, jury_member = %s ' .
               ' WHERE judgingid = %i',
               ($val == "1")?"correct":"wrong-answer", $jury_member, $id);
 auditlog("override", 'j'.$id, "overrode", $val ? "correct" : "wrong-answer");
